@@ -1,0 +1,27 @@
+
+{% extends 'base_generic.html' %}
+
+{% load static %}
+{% block content %}
+<div class="container about-us">
+    <h1 class="mt-5">About Us</h1>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <p>Welcome to [Your Platform Name], where technology meets precision. Our platform is designed to simplify the process of managing deposits from multiple banks by leveraging the power of Optical Character Recognition (OCR) and intelligent data routing. We understand the complexity of handling financial data, and our goal is to make it seamless and error-free.</p>
+            <p>At [Your Platform Name], we provide an all-in-one solution that captures deposit information from various sources, extracts the necessary details, and organizes them efficiently into your system. Whether you’re dealing with a few deposits or thousands, our platform scales with your needs, ensuring that your data is always accurate and up-to-date.</p>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'about_page.png' %}" alt="About Us Image" class="img-fluid rounded">
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Our Mission</h3>
+            <p>To revolutionize the way financial data is processed, by providing innovative and reliable solutions that save time, reduce errors, and increase efficiency.</p>
+
+            <h3>Our Vision</h3>
+            <p>To become the leading platform for automated financial data management, trusted by businesses around the world.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
