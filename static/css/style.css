@@ -1,0 +1,21 @@
+/* For mobile screens */
+@media (max-width: 991px) {
+    .dash-nav {
+        display: none; /* Hide the sidebar by default on mobile */
+    }
+
+    .dash-nav.mobile-show {
+        display: block; /* Show the sidebar when toggled on mobile */
+    }
+}
+
+/* For larger screens */
+@media (min-width: 992px) {
+    .dash-nav {
+        display: none; /* Hide the sidebar by default on large screens */
+    }
+
+    .dash-nav.dash-compact {
+        display: block; /* Show the sidebar when toggled on large screens */
+    }
+}
