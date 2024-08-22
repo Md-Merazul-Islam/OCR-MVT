@@ -1,82 +1,79 @@
-{% extends 'base_generic.html' %} {% load crispy_forms_tags %} {% block content%}
+{% extends 'base_generic.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
 <div class="container mt-5">
-  <div class="row m-3" style="margin-left: -15px">
-    <!-- Display the uploaded image -->
-    <div class="col-md-4 col-sm-12 mb-3 d-flex align-items-center justify-content-center">
-      <div class="d-flex flex-column">
-        <img
-          src="{{ ocr_result.image.url }}"
-          alt="Uploaded Image"
-          class="img-fluid"
-          style="max-width: auto; height: 150px"
-        />
-      </div>
+    <div class="row">
+        <!-- Left Column: Image and Extracted Text -->
+        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div class="row">
+                <!-- Display the uploaded image -->
+                <div class="col-md-4 col-sm-12 mb-3 d-flex align-items-center justify-content-center">
+                    <div class="d-flex flex-column">
+                        <img
+                            src="{{ ocr_result.image.url }}"
+                            alt="Uploaded Image"
+                            class="img-fluid"
+                            style="height: 300px; width: auto;"
+                        />
+                    </div>
+                </div>
+                <!-- Display the extracted text -->
+                <div class="col-md-8 col-sm-12 mb-3">
+                    <div class="p-4">
+                        <p><strong>Extracted Text:</strong></p>
+                        <div class="mb-3">
+                            <p>{{ ocr_result.extracted_text }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info mt-3" role="alert">
+                <strong>Note:</strong> If you do not see your specific information in the
+                extracted text above, please review the content carefully. You can
+                manually enter your details in the form below based on the information you
+                find relevant. Ensure that all the details you provide are accurate and
+                complete before confirming your submission. If you have any questions or
+                need further assistance, please contact support.
+            </div>
+        </div>
+
+        <!-- Right Column: Confirmation Form -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <h3>Confirm Your Data</h3>
+            <form method="post">
+                {% csrf_token %}
+                
+                {% if error_message %}
+                <div class="alert alert-danger">{{ error_message }}</div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="id_reservar">ID Reservar:</label>
+                    <input type="text" class="form-control" id="id_reservar" name="id_reservar" value="{{ ocr_result.id_reservar }}" placeholder="Reservar Id" required>
+                </div>
+                <div class="form-group">
+                    <label for="referencia">Referencia:</label>
+                    <input type="text" class="form-control" id="referencia" name="referencia" value="{{ ocr_result.referencia }}" placeholder="Referencia" required>
+                </div>
+                <div class="form-group">
+                    <label for="monto">Monto:</label>
+                    <input type="text" class="form-control" id="monto" name="monto" value="{{ ocr_result.monto }}" placeholder="Amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" value="" placeholder="Enter your phone username" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" value="" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="gmail">Gmail:</label>
+                    <input type="email" class="form-control" id="gmail" name="gmail" value="" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+        </div>
     </div>
-    
-    
-    <!-- Display the extracted text -->
-    <div class="col-md-8 col-sm-12 mb-3 d-flex align-items-stretch">
-      <div class="p-4 d-flex flex-column">
-        <p><strong>Extracted Text:</strong></p>
-        <div class="mb-3">
-          <p>{{ ocr_result.extracted_text }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="mb-3">
-    <div class="alert alert-info" role="alert">
-      <strong>Note:</strong> If you do not see your specific information in the
-      extracted text above, please review the content carefully. You can
-      manually enter your details in the form below based on the information you
-      find relevant. Ensure that all the details you provide are accurate and
-      complete before confirming your submission. If you have any questions or
-      need further assistance, please contact support.
-    </div>
-  </div>
-  
-  <h3>Confirm Your Data</h3>
-  {% comment %} <form method="post">
-    {% csrf_token %} {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Confirm</button>
-  </form> {% endcomment %}
-
-
-    <form method="post">
-        {% csrf_token %}
-        
-        {% if error_message %}
-        <div class="alert alert-danger">{{ error_message }}</div>
-        {% endif %}
-        
-        <div class="form-group">
-            <label for="id_reservar">ID Reservar:</label>
-            <input type="text" class="form-control" id="id_reservar" name="id_reservar" value="{{ ocr_result.id_reservar }}" placeholder="Reservar Id" required>
-        </div>
-        <div class="form-group">
-            <label for="referencia">Referencia:</label>
-            <input type="text" class="form-control" id="referencia" name="referencia" value="{{ ocr_result.referencia }}" placeholder="Referencia" required>
-        </div>
-        <div class="form-group">
-            <label for="monto">Monto:</label>
-            <input type="text" class="form-control" id="monto" name="monto" value="{{ ocr_result.monto }}"placeholder="Amount"  required>
-        </div>
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" value="" placeholder="Enter your phone username"  required>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone:</label>
-            <input type="text" class="form-control" id="phone" name="phone" value="" placeholder="Enter your phone number" required>
-        </div>
-        <div class="form-group">
-            <label for="gmail">Gmail:</label>
-            <input type="email" class="form-control" id="gmail" name="gmail" value="" placeholder="Enter you email" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Confirm</button>
-    </form>
-
-
 </div>
 {% endblock %}
