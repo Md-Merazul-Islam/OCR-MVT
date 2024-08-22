@@ -1,25 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload and Extract Text</title>
-</head>
-<body>
-    <h1>Upload an Image for OCR</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form>
+{% extends 'base_generic.html' %}
 
-    {% if result %}
-        <h2>OCR Result</h2>
-        <img src="{{ result.image.url }}" alt="Uploaded Image" style="max-width: 100%;">
-        <h3>Extracted Text:</h3>
-        <p>ID RESERVAR: {{ result.id_reservar }}</p>
-        <p>REFERENCIA: {{ result.referencia }}</p>
-        <p>MONTO: {{ result.monto }}</p>
-    {% endif %}
-</body>
-</html>
+{% block content %}
+<div class="container mt-5">
+  <h1>Upload and Extract</h1>
+  <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form }} 
+      <!-- File input for image upload -->
+
+      <!-- File input for image upload -->
+      <div class="mb-3">
+        {% comment %} <label for="id_image" class="form-label">Choose an image</label>
+        <input type="file" class="form-control" id="id_image" name="image"> {% endcomment %}
+        <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width:200px; margin-top: 10px;">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+</div>
+
+<script>
+document.getElementById('id_image').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('imagePreview');
+    
+    if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = '#';
+        preview.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
