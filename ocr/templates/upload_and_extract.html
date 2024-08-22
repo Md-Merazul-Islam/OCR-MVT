@@ -1,38 +1,257 @@
-{% extends 'base_generic.html' %}
+{% extends "base_generic.html" %} {% block title %}Page Title{% endblock %} {%block content %}
+<!-- Your page-specific content goes here -->
 
-{% block content %}
-<div class="container mt-5">
-  <h1>Upload and Extract</h1>
-  <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      {{ form }} 
-      <!-- File input for image upload -->
-      <div class="mb-3">
-        <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width:200px; margin-top: 10px;">
+<div class="container-fluid">
+  <style>
+    /*just bg and body style*/
+    .container {
+      background-color: #1e2832;
+      padding-bottom: 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .center {
+      text-align: center;
+    }
+    #top {
+      margin-top: 20px;
+    }
+    .btn-container {
+      background: #fff;
+      border-radius: 5px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+    .white {
+      color: white;
+    }
+    .imgupload {
+      color: #1e2832;
+      padding-top: 40px;
+      font-size: 7em;
+    }
+    #namefile {
+      color: black;
+    }
+    h4 > strong {
+      color: #ff3f3f;
+    }
+    .btn-primary {
+      border-color: #ff3f3f !important;
+      color: #ffffff;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      background-color: #ff3f3f !important;
+      border-color: #ff3f3f !important;
+    }
+
+    /*these two are set to not display at start*/
+    .imgupload.ok {
+      display: none;
+      color: green;
+    }
+    .imgupload.stop {
+      display: none;
+      color: red;
+    }
+
+    /*this sets the actual file input to overlay our button*/
+    #fileup {
+      opacity: 0;
+      -moz-opacity: 0;
+      filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+      width: 200px;
+      cursor: pointer;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 40px;
+      height: 50px;
+    }
+
+    /*switch between input and not active input*/
+    #submitbtn {
+      padding: 5px 50px;
+      display: none;
+    }
+    #fakebtn {
+      padding: 5px 40px;
+    }
+
+    /*www.emilianocostanzo.com*/
+    #sign {
+      color: #1e2832;
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      text-shadow: 0px 0px 0px #1e2832;
+      transition: all.3s;
+    }
+    #sign:hover {
+      color: #1e2832;
+      text-shadow: 0px 0px 5px #1e2832;
+    }
+
+    @media (max-width: 768px) {
+        #btnup {
+            font-size: 16px; /* Smaller font size for small devices */
+            padding: 10px 20px; /* Adjust padding for smaller buttons */
+            width: 100%; /* Make the button full-width */
+            box-sizing: border-box; /* Ensure padding doesn't exceed the button's width */
+        }
+    }
+    
+    @media (max-width: 576px) {
+        #btnup {
+            font-size: 14px; /* Further reduce font size for extra small devices */
+            padding: 8px 16px; /* Further reduce padding */
+        }
+    }
+    
+  </style>
+
+
+    <div class="">
+      <div class="card spur-card">
+        <div class="card-header">
+          <div class="spur-card-icon">
+            <i class="fas fa-images"></i>
+          </div>
+          <div class="spur-card-title py-2">Upload Your Receipts</div>
+        </div>
+        <div class="card-body">
+          <link
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+            rel="stylesheet"
+          />
+
+          <div class="container my-5 ">
+            <div class="row justify-content-center">
+              <div class="col-md-12 text-center">
+                <h1 class="white pt-5">Upload and Extract</h1>
+                <p class="white">
+                  In this example, submit is allowed only if the user uploads a
+                  valid image file.
+                </p>
+              </div>
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <div class="btn-container">
+                    <h1 class="imgupload">
+                      <i class="fa fa-file-image-o"></i>
+                    </h1>
+                    <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
+                    <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
+                    <p id="namefile">
+                      Only pics allowed! (jpg, jpeg, bmp, png)
+                    </p>
+                    <button
+                            type="button"
+                            id="btnup"
+                            class="btn btn-primary btn-lg"
+                        >
+                            Browse for your Receipts
+                    </button>
+
+                    <input
+                      type="file"
+                      name="image"
+                      class="form-control"
+                      id="id_image"
+                      accept="image/*"
+                      required
+                      style="display: none"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center align-items-center pb-4">
+                <div class="col-md-6 d-flex justify-content-center align-items-center">
+                    <img
+                        id="imagePreview"
+                        src="#"
+                        alt="Image Preview"
+                        style="display: none; max-width: 200px; margin-top: 10px"
+                    />
+                </div>
+            </div>
+            
+            
+
+              <div class="row justify-content-center pb-5">
+                <div class="col-md-6 text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-
-      <button type="submit" class="btn btn-primary">Upload</button>
-  </form>
+    </div>
+  
 </div>
 
 <script>
-document.getElementById('id_image').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const preview = document.getElementById('imagePreview');
-    
-    if (file) {
+  document.getElementById("btnup").addEventListener("click", function () {
+    document.getElementById("id_image").click();
+  });
+
+  document
+    .getElementById("id_image")
+    .addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("imagePreview");
+
+      if (file) {
         const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
+
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
         };
-        
+
         reader.readAsDataURL(file);
+      } else {
+        preview.src = "#";
+        preview.style.display = "none";
+      }
+    });
+
+  $("#fileup").change(function () {
+    //here we take the file extension and set an array of valid extensions
+    var res = $("#fileup").val();
+    var arr = res.split("\\");
+    var filename = arr.slice(-1)[0];
+    filextension = filename.split(".");
+    filext = "." + filextension.slice(-1)[0];
+    valid = [".jpg", ".png", ".jpeg", ".bmp"];
+    //if file is not valid we show the error icon, the red alert, and hide the submit button
+    if (valid.indexOf(filext.toLowerCase()) == -1) {
+      $(".imgupload").hide("slow");
+      $(".imgupload.ok").hide("slow");
+      $(".imgupload.stop").show("slow");
+
+      $("#namefile").css({ color: "red", "font-weight": 700 });
+      $("#namefile").html("File " + filename + " is not  pic!");
+
+      $("#submitbtn").hide();
+      $("#fakebtn").show();
     } else {
-        preview.src = '#';
-        preview.style.display = 'none';
+      //if file is valid we show the green alert and show the valid submit
+      $(".imgupload").hide("slow");
+      $(".imgupload.stop").hide("slow");
+      $(".imgupload.ok").show("slow");
+
+      $("#namefile").css({ color: "green", "font-weight": 700 });
+      $("#namefile").html(filename);
+
+      $("#submitbtn").show();
+      $("#fakebtn").hide();
     }
-});
+  });
 </script>
 {% endblock %}
