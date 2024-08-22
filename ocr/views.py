@@ -42,9 +42,9 @@ def upload_and_extract(request):
                 referencia=referencia,
                 monto=monto
             )
-            result.save()  # Save the result to get an ID
+            result.save()  
 
-            return redirect('ocr_confirm', pk=result.pk)  # Redirect to confirmation page with the ID
+            return redirect('ocr_confirm', pk=result.pk)  
 
     else:
         form = ImageUploadForm()
@@ -64,7 +64,7 @@ def ocr_confirm_view(request, pk):
         form = OCRResultForm(request.POST, instance=ocr_result)
         if form.is_valid():
             form.save()
-            return redirect('success_page')  # Redirect to a success page after saving
+            return redirect('success_page')  
 
     return render(request, 'ocr_confirm.html', {'form': form, 'ocr_result': ocr_result})
 

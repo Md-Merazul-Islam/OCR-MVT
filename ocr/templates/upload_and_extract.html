@@ -7,11 +7,7 @@
       {% csrf_token %}
       {{ form }} 
       <!-- File input for image upload -->
-
-      <!-- File input for image upload -->
       <div class="mb-3">
-        {% comment %} <label for="id_image" class="form-label">Choose an image</label>
-        <input type="file" class="form-control" id="id_image" name="image"> {% endcomment %}
         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width:200px; margin-top: 10px;">
       </div>
 
