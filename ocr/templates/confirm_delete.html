@@ -1,0 +1,12 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<h1>Confirm Delete</h1>
+<p>Are you sure you want to delete the OCR result for Reference ID: {{ ocr_result.referencia }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'ocr_results' %}">Cancel</a>
+</form>
+
+{% endblock %}

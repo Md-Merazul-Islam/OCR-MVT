@@ -1,0 +1,95 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .table-container {
+        background-color: #ffffff;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    .table th {
+        color: #6c757d;
+        font-weight: bold;
+    }
+    .table td {
+        vertical-align: middle;
+    }
+    .table .name-cell {
+        text-transform: uppercase;
+    }
+    .search-input {
+        margin-bottom: 20px;
+    }
+    .total-amount {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container mt-5">
+    <!-- Search Input -->
+    <input type="text" class="form-control search-input" placeholder="Search...">
+
+    <div class="table-container">
+        <!-- Total Amount -->
+        <div class="total-amount">
+            Total: Rs. {{ total_amount }}
+        </div>
+
+        <!-- Table -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>REFERENCE ID</th>
+                    <th>SENDER NAME</th>
+                    <th>SENDER NUMBER</th>
+                    <th>AMOUNT</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in ocr_results %}
+                <tr>
+                    <td>{{ result.referencia }}</td>
+                    <td class="name-cell">{{ result.name }}</td>
+                    <td>{{ result.phone }}</td>
+                    <td>{{ result.monto }}</td>
+                    <td>
+                        <!-- Edit and Delete Actions -->
+                        <a href="{% url 'edit_ocr_result' result.pk %}" class="btn btn-link" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'delete_ocr_result' result.pk %}" class="btn btn-link" title="Delete">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No results found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Optional: Include JavaScript for search functionality -->
+<script>
+    document.querySelector('.search-input').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        document.querySelectorAll('tbody tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const matches = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(searchTerm));
+            row.style.display = matches ? '' : 'none';
+        });
+    });
+</script>
+
+{% endblock %}

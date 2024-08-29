@@ -9,15 +9,14 @@
 <nav class="dash-nav-list">
     <a href="{% url 'home_page' %}" class="dash-nav-item">
         <i class="fas fa-home"></i> Dashboard </a>
-    <div class="dash-nav-dropdown">
-        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
-            <i class="fas fa-chart-bar"></i> Charts </a>
-        <div class="dash-nav-dropdown-menu">
-            <a href="chartjs.html" class="dash-nav-dropdown-item">Chart.js</a>
-        </div>
-    </div>
+    <a href="{% url 'ocr_results' %}" class="dash-nav-item">
+        <i class="fas fa-chart-bar"></i></i> All Transaction </a>
 
-    <div class="dash-nav-dropdown">
+
+   
+    
+
+    {% comment %} <div class="dash-nav-dropdown">
         <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
             <i class="fas fa-file"></i> Layouts </a>
         <div class="dash-nav-dropdown-menu">
@@ -26,7 +25,7 @@
             <a href="login.html" class="dash-nav-dropdown-item">Log in</a>
             <a href="signup.html" class="dash-nav-dropdown-item">Sign up</a>
         </div>
-    </div>
+    </div> {% endcomment %}
     <div class="dash-nav-dropdown">
         <a href="{% url 'about_page' %}"class="dash-nav-item ">
             <i class="fas fa-info"></i> About </a>
@@ -50,9 +49,7 @@
         <input type="text" class="searchbox-input" placeholder="type to search">
     </form>
     <div class="tools">
-        <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
-            <i class="fab fa-github"></i>
-        </a>
+      
         <a href="#!" class="tools-item">
             <i class="fas fa-bell"></i>
             <i class="tools-item-count">4</i>
