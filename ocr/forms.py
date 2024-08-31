@@ -1,29 +1,3 @@
-# from django import forms
-# from .models import OCRResult
-
-# class ImageUploadForm(forms.Form):
-#     image = forms.ImageField()
-
-# class OCRResultForm(forms.ModelForm):
-#     class Meta:
-#         model = OCRResult
-#         fields = ['id_reservar', 'referencia', 'monto', 'name', 'phone', 'gmail']
-
-
-#     def clean(self):
-#             cleaned_data = super().clean()
-#             id_reservar = cleaned_data.get('id_reservar')
-#             referencia = cleaned_data.get('referencia')
-#             monto = cleaned_data.get('monto')
-#             name = cleaned_data.get('name')
-#             phone = cleaned_data.get('phone')
-#             gmail = cleaned_data.get('gmail')
-            
-#             if not (id_reservar and referencia and monto and name and phone and gmail):
-#                 raise forms.ValidationError('All fields are required.')
-            
-#             return cleaned_data
-
 
 
 from django import forms
