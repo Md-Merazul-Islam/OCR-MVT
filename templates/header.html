@@ -1,76 +1,111 @@
-
 <header>
-    <a href="#!" class="menu-toggle">
-        <i class="fas fa-bars"></i>
-    </a>
-    <a href="{% url 'home_page' %}" class="spur-logo"><i class="fas fa-bolt"></i> <span>My Website</span></a>
-  </header>
-  
-  
-  <nav class="dash-nav-list">
-    <a href="{% url 'home_page' %}" class="dash-nav-item">
-        <i class="fas fa-home"></i> Dashboard </a>
-    <a href="{% url 'ocr_results' %}" class="dash-nav-item">
-        <i class="fas fa-chart-bar"></i> All Transaction </a>
-    <a href="{% url 'graph' %}" class="dash-nav-item">
-         <i class="fas fa-chart-line"></i> Graph</a>
+  <a href="#!" class="menu-toggle">
+      <i class="fas fa-bars"></i>
+  </a>
+  <a href="index.html" class="spur-logo"><i class="fas fa-bolt"></i> <span>My Website</span></a>
+</header>
 
 
-    <div class="dash-nav-dropdown">
-        <a href="{% url 'about_page' %}"class="dash-nav-item ">
-            <i class="fas fa-info"></i> About </a>
-    </div>
-    <div class="dash-nav-dropdown">
-        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
-            <i class="fas fa-file"></i> Account </a>
-        <div class="dash-nav-dropdown-menu">
-            <a href="login.html" class="dash-nav-dropdown-item">Log in</a>
-            <a href="signup.html" class="dash-nav-dropdown-item">Sign up</a>
-        </div>
-    </div> 
-  </nav>
+<nav class="dash-nav-list">
+  <a href="{% url 'home_page' %}" class="dash-nav-item">
+      <i class="fas fa-home"></i> Dashboard </a>
+  <a href="{% url 'ocr_results' %}" class="dash-nav-item">
+      <i class="fas fa-chart-bar"></i></i> All Transaction </a>
+
+
+ 
+  
+
+  {% comment %} <div class="dash-nav-dropdown">
+      <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+          <i class="fas fa-file"></i> Layouts </a>
+      <div class="dash-nav-dropdown-menu">
+          <a href="blank.html" class="dash-nav-dropdown-item">Blank</a>
+          <a href="content.html" class="dash-nav-dropdown-item">Content</a>
+          <a href="login.html" class="dash-nav-dropdown-item">Log in</a>
+          <a href="signup.html" class="dash-nav-dropdown-item">Sign up</a>
+      </div>
+  </div> {% endcomment %}
+  <div class="dash-nav-dropdown">
+      <a href="{% url 'about_page' %}"class="dash-nav-item ">
+          <i class="fas fa-info"></i> About </a>
+
   </div>
-  
-  
-  <div class="dash-app">
-  <header class="dash-toolbar">
-    <a href="#!" class="menu-toggle">
-        <i class="fas fa-bars"></i>
-    </a>
-    <a href="#!" class="searchbox-toggle">
-        <i class="fas fa-search"></i>
-    </a>
-    <form class="searchbox" action="#!">
-        <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
-        <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
-        <input type="text" class="searchbox-input" placeholder="type to search">
-    </form>
-    {% if user.is_authenticated %}
-    <div class="tools">
-      <a href="#!" class="tools-item">
+</nav>
+</div>
+
+
+<div class="dash-app">
+<header class="dash-toolbar">
+  <a href="#!" class="menu-toggle">
+      <i class="fas fa-bars"></i>
+  </a>
+  <a href="#!" class="searchbox-toggle">
+      <i class="fas fa-search"></i>
+  </a>
+  <form class="searchbox" action="#!">
+      <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
+      <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
+      <input type="text" class="searchbox-input" placeholder="type to search">
+  </form>
+  {% if user.is_authenticated %}
+  <div class="tools">
+    <a href="#!" class="tools-item">
         <i class="fas fa-bell"></i>
         <i class="tools-item-count">4</i>
-      </a>
-      <div class="dropdown tools-item">
-        <a href="#" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user"></i>
+    </a>
+    <div class="dropdown tools-item">
+        <a href="#" class="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-          <a class="dropdown-item" href="#!">Profile</a>
-          <a class="dropdown-item" href="login.html">Logout</a>
+            <a class="dropdown-item" href="#!">Profile</a>
+            <a class="dropdown-item" href="login.html">Logout</a>
         </div>
-      </div>
     </div>
-    {% else %}
-    <div class="tools">
-      <a href="{% url 'register' %}" class="btn btn-outline-primary mr-2">
+  </div>
+  {% else %}
+  <div class="tools">
+    <button onclick="location.href='{% url 'register' %}'" class="btn btn-success">
         <i class="fas fa-user-plus"></i> Register
-      </a>
-      <a href="{% url 'user_login' %}" class="btn btn-outline-success">
-        <i class="fas fa-sign-in-alt"></i> Login
-      </a>
+    </button>
+    <div class="ml-3">
+        <button onclick="location.href='{% url 'user_login' %}'" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
     </div>
-    {% endif %}
-    
-    
-  </header>
+</div>
+  {% endif %}
+  
+</header>
+
+
+<style>
+  .tools button {
+    border-radius: 5px;
+    border: 2px solid transparent;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-success {
+    border-color: #28a745;
+}
+
+.btn-primary {
+    border-color: #007bff;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0056b3;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+</style>

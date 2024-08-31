@@ -9,7 +9,7 @@ urlpatterns = [
     path('', home, name='home_page'),
     path('about/', About, name='about_page'),
     path('ocr/',include('ocr.urls')),
-    path('account/',include('account.urls')),
+    path('accounts/',include('account.urls')),
       path('graph/',graph_view, name='graph'),
     
 ]
