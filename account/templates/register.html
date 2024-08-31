@@ -5,22 +5,23 @@
   {% load crispy_forms_tags %}
 
   <div style="padding-top: 2rem;">
-    <form action="" method="POST" class="needs-validation" novalidate>
+    <form action="" method="POST" class="needs-validation" novalidate autocomplete="off">
       {% csrf_token %}
+      <!-- {{form | crispy}}-->   
       <section class="vh-100 gradient-custom">
-        <div class="container">
-          <div class="row justify-content-center align-items-center">
-            <div class="col-lg-6 col-md-8 col-sm-10">
+        <div class="container py-5">
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
               <div class="card bg-dark text-white" style="border-radius: 1rem;">
                 <div class="card-body p-5 text-center">
-                  <div class="mb-md-5 mt-md-4">
-                    <h2 class="fw-bold mb-2 text-uppercase">Sign Up</h2>
-                    <p class="text-white-50 mb-5">Please fill out this form</p>
-
+                  <div class="mb-md-5 mt-md-4 pb-1">
+                    <h2 class="fw-bold mb-2 text-uppercase">Create a new page</h2>
+                    <p class="text-white-50 mb-5">Write this infomation a create your profile </p>
+  
                     {% for field in form %}
-                      <div class="form-group mb-4">
-                        <label for="{{ field.id_for_label }}" class="form-label text-start">{{ field.label }}</label>
-                        <div class="form-outline form-white">
+                      <div class="form-group text-start mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        <div data-mdb-input-init class="form-outline form-white">
                           {{ field }}
                           {% for error in field.errors %}
                             <p class="text-danger">{{ error }}</p>
@@ -28,30 +29,27 @@
                         </div>
                       </div>
                     {% endfor %}
-
-                    <p class="small pb-lg-2">
-                      <a class="text-white-50" href="#!">Forgot password?</a>
-                    </p>
-
-                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+  
+  
+  
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
 
                     <div class="d-flex justify-content-center mt-4 pt-1">
-                      <a href="#" class="text-white mx-2">
+                      <div class="mx-2">
                         <i class="fab fa-facebook" style="font-size: 40px;"></i>
-                      </a>
-                      <a href="#" class="text-white mx-2">
+                      </div>
+                      <div class="mx-2">
                         <i class="fab fa-twitter" style="font-size: 40px;"></i>
-                      </a>
-                      <a href="#" class="text-white mx-2">
+                      </div>
+                      <div class="mx-2">
                         <i class="fab fa-google" style="font-size: 40px;"></i>
-                      </a>
+                      </div>
                     </div>
-                  </div>
-
-                  <div>
-                    <p class="mb-0 pt-3">
-                      Already have an account? <a href="{% url 'user_login' %}" class="text-white-50 fw-bold">Sign up</a>
-                    </p>
+                    <div class="mt-4 pt-4">
+                      <p class="mb-0">
+                         have an account? <a href="{% url 'user_login' %}" class="text-white-50 fw-bold">login</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -61,4 +59,32 @@
       </section>
     </form>
   </div>
+  
 {% endblock %}
+
+<!-- Add media queries for additional responsiveness -->
+<style>
+  @media (max-width: 767px) {
+    .card-body {
+      padding: 3rem 1.5rem;
+    }
+    .form-outline {
+      margin-bottom: 1.5rem;
+    }
+    .btn-lg {
+      padding: 0.5rem 1rem;
+    }
+    .fab {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .card-body {
+      padding: 2rem 1rem;
+    }
+    .btn-lg {
+      padding: 0.5rem;
+    }
+  }
+</style>

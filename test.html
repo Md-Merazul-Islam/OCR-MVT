@@ -1,0 +1,61 @@
+document.querySelectorAll('.edit-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const pk = this.getAttribute('data-id');
+        const referencia = this.getAttribute('data-referencia');
+        const name = this.getAttribute('data-name');
+        const phone = this.getAttribute('data-phone');
+        const monto = this.getAttribute('data-monto');
+
+        document.getElementById('editReferencia').value = referencia;
+        document.getElementById('editName').value = name;
+        document.getElementById('editPhone').value = phone;
+        document.getElementById('editMonto').value = monto;
+
+        const url = `/edit/${pk}/`;  // Update this URL pattern if needed
+        document.getElementById('editForm').action = url;
+        
+
+        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+        editModal.show();
+    });
+});
+
+
+
+
+<!-- Edit Modal -->
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog d-flex justify-content-center">
+        <div class="modal-content w-75">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit OCR Result</h5>
+                <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="editForm" method="POST">
+                    {% csrf_token %}
+                    <div class="form-outline mb-4">
+                        <input type="text" id="editReferencia" name="referencia" class="form-control" required />
+                        <label class="form-label" for="editReferencia">REFERENCE ID</label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input type="text" id="editName" name="name" class="form-control" required />
+                        <label class="form-label" for="editName">SENDER NAME</label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input type="text" id="editPhone" name="phone" class="form-control" required />
+                        <label class="form-label" for="editPhone">SENDER NUMBER</label>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input type="text" id="editMonto" name="monto" class="form-control" required />
+                        <label class="form-label" for="editMonto">AMOUNT</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

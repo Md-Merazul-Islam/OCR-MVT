@@ -1,63 +1,56 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-
 <style>
-    body {
-        background-color: #f8f9fa;
-    }
-    .table-container {
-        background-color: #ffffff;
-        border-radius: 5px;
-        padding: 20px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
-    .table th {
-        color: #6c757d;
-        font-weight: bold;
-    }
-    .table td {
-        vertical-align: middle;
-    }
-    .table .name-cell {
+    .uppercase {
         text-transform: uppercase;
     }
-    .search-input {
-        margin-bottom: 20px;
-    }
-    .total-amount {
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
+    
+    p.lowercase {
+        text-transform: lowercase;
     }
 </style>
 
 <div class="container mt-5">
+    <!-- Display messages -->
+    {% if messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert" id="successMessage">
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
     <!-- Search Input -->
-    <input type="text" class="form-control search-input" placeholder="Search...">
+    <input type="text" class="form-control search-input my-3" placeholder="Find your information by seraching...">
 
     <div class="table-container">
         <!-- Total Amount -->
-        <div class="total-amount">
-            Total: Rs. {{ total_amount }}
+        <div class="total-amount bg-dark text-white font-weight-bold py-3 px-4 rounded shadow-sm">
+            <div class="d-flex  align-items-center">
+                <span class="h4 mb-0">Total: </span>
+                <span class="h4 mb-0 ml-3">Rs. {{ total_amount }}</span>
+            </div>
         </div>
+        
 
         <!-- Table -->
-        <table class="table table-hover">
-            <thead>
-                <tr>
+        <table class="table table-striped">
+            <theadc >
+                <tr class="table-info" >
                     <th>REFERENCE ID</th>
                     <th>SENDER NAME</th>
                     <th>SENDER NUMBER</th>
                     <th>AMOUNT</th>
                     <th>ACTIONS</th>
                 </tr>
-            </thead>
+            </theadc>
             <tbody>
                 {% for result in ocr_results %}
                 <tr>
                     <td>{{ result.referencia }}</td>
-                    <td class="name-cell">{{ result.name }}</td>
+                    <td class="uppercase">{{ result.name }}</td>
                     <td>{{ result.phone }}</td>
                     <td>{{ result.monto }}</td>
                     <td>
@@ -65,9 +58,9 @@
                         <a href="{% url 'edit_ocr_result' result.pk %}" class="btn btn-link" title="Edit">
                             <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="{% url 'delete_ocr_result' result.pk %}" class="btn btn-link" title="Delete">
+                        <button class="btn btn-link delete-btn" data-id="{{ result.pk }}" data-referencia="{{ result.referencia }}" data-name="{{ result.name }}" data-phone="{{ result.phone }}" data-monto="{{ result.monto }}" title="Delete">
                             <i class="bi bi-trash"></i>
-                        </a>
+                        </button>
                     </td>
                 </tr>
                 {% empty %}
@@ -80,16 +73,67 @@
     </div>
 </div>
 
-<!-- Optional: Include JavaScript for search functionality -->
-<script>
-    document.querySelector('.search-input').addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        document.querySelectorAll('tbody tr').forEach(row => {
-            const cells = row.querySelectorAll('td');
-            const matches = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(searchTerm));
-            row.style.display = matches ? '' : 'none';
-        });
-    });
-</script>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog d-flex justify-content-center">
+        <div class="modal-content w-75">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <p>Are you sure you want to delete the following record?</p>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item"><strong>Reference ID:</strong> <span id="deleteReferencia"></span></li>
+                    <li class="list-group-item"><strong>Sender Name:</strong> <span id="deleteName"></span></li>
+                    <li class="list-group-item"><strong>Sender Number:</strong> <span id="deletePhone"></span></li>
+                    <li class="list-group-item"><strong>Amount:</strong> <span id="deleteMonto"></span></li>
+                </ul>
+                <form id="deleteForm" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                    <button type="button" class="btn btn-secondary btn-block" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- JavaScript for Delete Modal -->
+<script>
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const pk = this.getAttribute('data-id');
+        const referencia = this.getAttribute('data-referencia');
+        const name = this.getAttribute('data-name');
+        const phone = this.getAttribute('data-phone');
+        const monto = this.getAttribute('data-monto');
+
+        document.getElementById('deleteReferencia').textContent = referencia;
+        document.getElementById('deleteName').textContent = name;
+        document.getElementById('deletePhone').textContent = phone;
+        document.getElementById('deleteMonto').textContent = monto;
+
+        // Update form action URL
+        document.getElementById('deleteForm').action = `{% url 'delete_ocr_result' 0 %}`.replace('0', pk);
+
+        // Show the modal
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+    });
+});
+
+// JavaScript to auto-hide success messages after 2 seconds
+window.addEventListener('load', () => {
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        setTimeout(() => {
+            successMessage.classList.remove('show');
+            successMessage.classList.add('fade');
+        }, 2000); // Hide after 2 seconds
+    }
+});
+</script>
 {% endblock %}

@@ -79,15 +79,24 @@ def success_view(request):
     return render(request, 'success.html')
 
 
-
+# from django.shortcuts import render
+# from .models import OCRResult
+# from django.db.models import Sum
+# from decimal import Decimal
 
 def ocr_results_view(request):
     ocr_results = OCRResult.objects.all()
     total_amount = OCRResult.objects.aggregate(total_amount=Sum('monto'))['total_amount'] or Decimal('0.00')
-
+    
     return render(request, 'ocr_results.html', {'ocr_results': ocr_results, 'total_amount': total_amount})
 
 
+
+
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import OCRResult
+from .forms import OCRResultForm
+from django.contrib import messages
 
 def edit_ocr_result_view(request, pk):
     ocr_result = get_object_or_404(OCRResult, pk=pk)
@@ -96,9 +105,10 @@ def edit_ocr_result_view(request, pk):
         form = OCRResultForm(request.POST, instance=ocr_result)
         if form.is_valid():
             form.save()
+            messages.success(request, 'OCR Result updated successfully!')
             return redirect('ocr_results')  
         else:
-            print(form.errors)  # Print errors for debugging
+            messages.error(request, 'There was an error updating the OCR Result.')
     else:
         form = OCRResultForm(instance=ocr_result)
     
@@ -106,14 +116,16 @@ def edit_ocr_result_view(request, pk):
 
 
 
-
-
-def delete_ocr_result(request, pk):
+def delete_ocr_result_view(request, pk):
     ocr_result = get_object_or_404(OCRResult, pk=pk)
+    
     if request.method == 'POST':
         ocr_result.delete()
+        messages.success(request, 'OCR result successfully deleted.')
         return redirect('ocr_results')
-    return render(request, 'confirm_delete.html', {'ocr_result': ocr_result})
+    
+    return render(request, 'edit_ocr_result.html', {'ocr_result': ocr_result})
+
 
 
 
