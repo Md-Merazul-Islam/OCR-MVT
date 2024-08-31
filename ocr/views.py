@@ -169,3 +169,4 @@ def ocr_confirm_view(request, pk):
 
     form = OCRResultForm(instance=ocr_result)
     return render(request, 'ocr_confirm.html', {'form': form, 'ocr_result': ocr_result})
+

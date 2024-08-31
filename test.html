@@ -1,61 +1,83 @@
-document.querySelectorAll('.edit-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const pk = this.getAttribute('data-id');
-        const referencia = this.getAttribute('data-referencia');
-        const name = this.getAttribute('data-name');
-        const phone = this.getAttribute('data-phone');
-        const monto = this.getAttribute('data-monto');
-
-        document.getElementById('editReferencia').value = referencia;
-        document.getElementById('editName').value = name;
-        document.getElementById('editPhone').value = phone;
-        document.getElementById('editMonto').value = monto;
-
-        const url = `/edit/${pk}/`;  // Update this URL pattern if needed
-        document.getElementById('editForm').action = url;
-        
-
-        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-        editModal.show();
-    });
-});
 
 
+<header>
+  <a href="#!" class="menu-toggle">
+      <i class="fas fa-bars"></i>
+  </a>
+  <a href="index.html" class="spur-logo"><i class="fas fa-bolt"></i> <span>My Website</span></a>
+</header>
 
 
-<!-- Edit Modal -->
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog d-flex justify-content-center">
-        <div class="modal-content w-75">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit OCR Result</h5>
-                <button type="button" class="btn text-danger" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body p-4">
-                <form id="editForm" method="POST">
-                    {% csrf_token %}
-                    <div class="form-outline mb-4">
-                        <input type="text" id="editReferencia" name="referencia" class="form-control" required />
-                        <label class="form-label" for="editReferencia">REFERENCE ID</label>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" id="editName" name="name" class="form-control" required />
-                        <label class="form-label" for="editName">SENDER NAME</label>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" id="editPhone" name="phone" class="form-control" required />
-                        <label class="form-label" for="editPhone">SENDER NUMBER</label>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <input type="text" id="editMonto" name="monto" class="form-control" required />
-                        <label class="form-label" for="editMonto">AMOUNT</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<nav class="dash-nav-list">
+  <a href="{% url 'home_page' %}" class="dash-nav-item">
+      <i class="fas fa-home"></i> Dashboard </a>
+  <a href="{% url 'ocr_results' %}" class="dash-nav-item">
+      <i class="fas fa-chart-bar"></i></i> All Transaction </a>
+
+
+ 
+  
+
+  {% comment %} <div class="dash-nav-dropdown">
+      <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
+          <i class="fas fa-file"></i> Layouts </a>
+      <div class="dash-nav-dropdown-menu">
+          <a href="blank.html" class="dash-nav-dropdown-item">Blank</a>
+          <a href="content.html" class="dash-nav-dropdown-item">Content</a>
+          <a href="login.html" class="dash-nav-dropdown-item">Log in</a>
+          <a href="signup.html" class="dash-nav-dropdown-item">Sign up</a>
+      </div>
+  </div> {% endcomment %}
+  <div class="dash-nav-dropdown">
+      <a href="{% url 'about_page' %}"class="dash-nav-item ">
+          <i class="fas fa-info"></i> About </a>
+
+  </div>
+</nav>
 </div>
+
+
+<div class="dash-app">
+<header class="dash-toolbar">
+  <a href="#!" class="menu-toggle">
+      <i class="fas fa-bars"></i>
+  </a>
+  <a href="#!" class="searchbox-toggle">
+      <i class="fas fa-search"></i>
+  </a>
+  <form class="searchbox" action="#!">
+      <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
+      <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
+      <input type="text" class="searchbox-input" placeholder="type to search">
+  </form>
+  {% if user.is_authenticated %}
+  <div class="tools">
+    <a href="#!" class="tools-item">
+      <i class="fas fa-bell"></i>
+      <i class="tools-item-count">4</i>
+    </a>
+    <div class="dropdown tools-item">
+      <a href="#" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+        <a class="dropdown-item" href="#!">Profile</a>
+        <a class="dropdown-item" href="login.html">Logout</a>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="tools">
+    <a href="{% url 'register' %}" class="btn btn-outline-primary mr-2">
+      <i class="fas fa-user-plus"></i> Register
+    </a>
+    <a href="{% url 'user_login' %}" class="btn btn-outline-success">
+      <i class="fas fa-sign-in-alt"></i> Login
+    </a>
+  </div>
+  {% endif %}
+  
+  
+  
+  
+</header>
