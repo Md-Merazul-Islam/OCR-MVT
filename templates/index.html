@@ -3,211 +3,250 @@
 {% block title %}Page Title{% endblock %}
 
 {% block content %}
-<!-- Your page-specific content goes here -->
-
-
 
 <div class="container-fluid">
 
+    <!-- Inline Styles -->
     <style>
-        /*just bg and body style*/
-.container{
-    background-color:#1E2832;
-    padding-bottom:20px;
-    margin-top:10px;
-    border-radius:5px;
-    }
-    .center{
-    text-align:center;  
-    }
-    #top{
-    margin-top:20px;  
-    }
-    .btn-container{
-    background:#fff;
-    border-radius:5px;
-    padding-bottom:20px;
-    margin-bottom:20px;
-    }
-    .white{
-    color:white;
-    }
-    .imgupload{
-    color:#1E2832;
-    padding-top:40px;
-    font-size:7em;
-    }
-    #namefile{
-    color:black;
-    }
-    h4>strong{
-    color:#ff3f3f
-    }
-    .btn-primary{
-    border-color: #ff3f3f !important;
-    color: #ffffff;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #ff3f3f !important;
-    border-color: #ff3f3f !important;
-    }
-    
-    /*these two are set to not display at start*/
-    .imgupload.ok{
-    display:none;
-    color:green;
-    }
-    .imgupload.stop{
-    display:none;
-    color:red;
-    }
-    
-    
-    /*this sets the actual file input to overlay our button*/ 
-    #fileup{
-    opacity: 0;
-    -moz-opacity: 0;
-    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-    width:200px;
-    cursor: pointer;
-    position:absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 40px;
-    height: 50px;
-    }
-    
-    /*switch between input and not active input*/
-    #submitbtn{
-      padding:5px 50px;
-      display:none;
-    }
-    #fakebtn{
-      padding:5px 40px;
-    }
-    
-    
-    /*www.emilianocostanzo.com*/
-    #sign{
-        color:#1E2832;
-        position:fixed;
-        right:10px;
-        bottom:10px;
-        text-shadow:0px 0px 0px #1E2832;
-        transition:all.3s;
-    }
-    #sign:hover{
-        color:#1E2832;
-        text-shadow:0px 0px 5px #1E2832;
-    }
+        /* Container and Body Style */
+        .container {
+            background-color: #1E2832;
+            padding-bottom: 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        #top {
+            margin-top: 20px;
+        }
+
+        .btn-container {
+            background: #fff;
+            border-radius: 5px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .white {
+            color: white;
+        }
+
+        .imgupload {
+            color: #1E2832;
+            padding-top: 40px;
+            font-size: 7em;
+        }
+
+        #namefile {
+            color: black;
+        }
+
+        h4>strong {
+            color: #ff3f3f;
+        }
+
+        .btn-primary {
+            border-color: #ff3f3f !important;
+            color: #ffffff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+            background-color: #ff3f3f !important;
+            border-color: #ff3f3f !important;
+        }
+
+        /* Image Upload Styles */
+        .imgupload.ok {
+            display: none;
+            color: green;
+        }
+
+        .imgupload.stop {
+            display: none;
+            color: red;
+        }
+
+        /* File Input Overlay */
+        #fileup {
+            opacity: 0;
+            width: 200px;
+            cursor: pointer;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 40px;
+            height: 50px;
+        }
+
+        /* Submit Button */
+        #submitbtn {
+            padding: 5px 50px;
+            display: none;
+        }
+
+        #fakebtn {
+            padding: 5px 40px;
+        }
+
+        /* Graph Container */
+        #container {
+            width: 80%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #ocrResultsGraph {
+            width: 100%;
+            height: 400px;
+        }
+
+        /* Footer Signature */
+        #sign {
+            color: #1E2832;
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            text-shadow: 0px 0px 0px #1E2832;
+            transition: all .3s;
+        }
+
+        #sign:hover {
+            color: #1E2832;
+            text-shadow: 0px 0px 5px #1E2832;
+        }
     </style>
 
-
+    <!-- Main Content -->
     <div class="row">
+        <!-- Transaction Progress Card -->
         <div class="col-xl-8">
             <div class="card spur-card">
                 <div class="card-header">
                     <div class="spur-card-icon">
                         <i class="fas fa-chart-bar"></i>
                     </div>
-                    <div class="spur-card-title"> Transaction Progress </div>
-                    <div class="spur-card-menu">
-                        <div class="dropdown show">
-                            <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="spur-card-title">Transaction Progress</div>
                 </div>
                 <div class="card-body spur-card-body-chart">
-                    <canvas id="spurChartjsBar"></canvas>
-                    <script>
-                        var ctx = document.getElementById("spurChartjsBar").getContext('2d');
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                                datasets: [{
-                                    label: 'Blue',
-                                    data: [12, 19, 3, 5, 2],
-                                    backgroundColor: window.chartColors.primary,
-                                    borderColor: 'transparent'
-                                }]
-                            },
-                            options: {
-                                legend: {
-                                    display: false
-                                },
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            }
-                        });
-                    </script>
+                    
+                        <h1>Total Number Of Transaction Per Day</h1>
+                        <div id="ocrResultsGraph"></div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Today's Total Amount: {{ total_amount_today }}<p/>
+                                    <p>Today's Total Transactions: {{ total_transactions_today }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>All Time Total Amount: {{ total_amount_last_30_days }}</p>
+                                    <p>All Time Total Transactions: {{ total_transactions_last_30_days }}</p>
+                                </div>
+                            </div>
+                        </div>
+                 
                 </div>
             </div>
         </div>
+
+
+
+
+
+       
+
+
+        <!-- Receipt Upload Card -->
         <div class="col-xl-4">
             <div class="card spur-card">
-                <div class="card-header ">
+                <div class="card-header">
                     <div class="spur-card-icon">
                         <i class="fas fa-bell"></i>
                     </div>
-                    <div class="spur-card-title"> Upload Your Receipts </div>
+                    <div class="spur-card-title">Upload Your Receipts</div>
                 </div>
-                <div class="card-body ">
-                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-                
+                <div class="card-body">
                     <div class="container mt-5">
                         <div class="row justify-content-center">
                             <div class="col-md-12 text-center">
-                                <h1 class="white py-5 ">Upload and Extract</h1>
-                                
+                                <h1 class="white py-5">Upload and Extract</h1>
                             </div>
                         </div>
-                    
-                        <div>
-                           
-                            <div class="row justify-content-center">
-                                <div class="col-md-10 text-center">
-                                    <div class="btn-container">
-                                        <h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>
-                                        <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
-                                        <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
-                                        <p id="namefile">Only pics allowed! (jpg, jpeg, bmp, png)</p>
-                                            <a  href="{% url 'upload_and_extract' %}" class="btn btn-primary btn-lg text-white">Extract My Receipts</a>
-                                       
-                                    </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 text-center">
+                                <div class="btn-container">
+                                    <h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>
+                                    <h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
+                                    <h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
+                                    <p id="namefile">Only pics allowed! (jpg, jpeg, bmp, png)</p>
+                                    <a href="{% url 'upload_and_extract' %}" class="btn btn-primary btn-lg text-white">Extract My Receipts</a>
                                 </div>
                             </div>
-                            
-                    
-                            <div class="row justify-content-center pb-4">
-                                <div class="col-md-6 text-center">
-                                    <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 200px; margin-top: 10px;">
-                                </div>
+                        </div>
+                        <div class="row justify-content-center pb-4">
+                            <div class="col-md-6 text-center">
+                                <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 200px; margin-top: 10px;">
                             </div>
-                    
-                          
                         </div>
                     </div>
-                    
-                  
-                </div>
-                
-                
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Plotly.js Script -->
+<script type="text/javascript">
+    // Data passed from the Django view
+    var dates = {{ dates|safe }};
+    var counts = {{ counts|safe }};
+
+    // Plotly data setup
+    var data = [{
+        x: dates,
+        y: counts,
+        type: 'bar',
+        marker: {
+            color: 'rgba(0, 123, 255, 0.6)',
+            line: {
+                color: 'rgba(0, 123, 255, 1.0)',
+                width: 2
+            }
+        }
+    }];
+
+    // Layout configuration
+    var layout = {
+        title: '',
+        xaxis: { 
+            title: 'Date',
+            tickangle: -45,
+            automargin: true
+        },
+        yaxis: { 
+            title: 'Count of OCR Results'
+        },
+        plot_bgcolor: '#f8f9fa',
+        paper_bgcolor: '#ffffff',
+        margin: {
+            t: 40,
+            b: 80,
+            l: 50,
+            r: 30
+        }
+    };
+
+    // Render the graph
+    Plotly.newPlot('ocrResultsGraph', data, layout);
+</script>
 
 {% endblock %}
