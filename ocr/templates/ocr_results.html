@@ -23,29 +23,28 @@
     {% endif %}
 
     <!-- Search Input -->
-    <input type="text" class="form-control search-input my-3" placeholder="Find your information by seraching...">
+    <input type="text" class="form-control search-input my-3" placeholder="Find your information by searching...">
 
     <div class="table-container">
         <!-- Total Amount -->
         <div class="total-amount bg-primary text-white font-weight-bold py-3 px-4 rounded shadow-sm">
-            <div class="d-flex  align-items-center">
+            <div class="d-flex align-items-center">
                 <span class="h4 mb-0">Total: </span>
                 <span class="h4 mb-0 ml-3">Rs. {{ total_amount }}</span>
             </div>
         </div>
         
-
         <!-- Table -->
         <table class="table table-striped">
-            <theadc >
-                <tr class="table-info" >
+            <thead>
+                <tr class="table-info">
                     <th>REFERENCE ID</th>
                     <th>SENDER NAME</th>
                     <th>SENDER NUMBER</th>
                     <th>AMOUNT</th>
                     <th>ACTIONS</th>
                 </tr>
-            </theadc>
+            </thead>
             <tbody>
                 {% for result in ocr_results %}
                 <tr>
@@ -132,6 +131,11 @@ window.addEventListener('load', () => {
             successMessage.classList.remove('show');
             successMessage.classList.add('fade');
         }, 2000); // Hide after 2 seconds
+
+        // Reload the page 1 second after hiding the message
+        setTimeout(() => {
+            location.reload();
+        }, 3000);
     }
 });
 </script>
