@@ -1,13 +1,11 @@
 {% extends 'base_generic.html' %}
+{% load static crispy_forms_tags %}
 
-{% load static %}
 {% block content %}
-  {% load crispy_forms_tags %}
-
   <div style="padding-top: 2rem;">
     <form action="" method="POST" class="needs-validation" novalidate autocomplete="off">
       {% csrf_token %}
-      <!-- {{form | crispy}}-->   
+      
       <section class="vh-100 gradient-custom">
         <div class="container py-5">
           <div class="row d-flex justify-content-center align-items-center">
@@ -17,23 +15,13 @@
                   <div class="mb-md-5 mt-md-4 pb-1">
                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                     <p class="text-white-50 mb-5">Please enter your login and password!</p>
-  
-                    {% for field in form %}
-                      <div class="form-group text-start mb-4">
-                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                        <div data-mdb-input-init class="form-outline form-white">
-                          {{ field }}
-                          {% for error in field.errors %}
-                            <p class="text-danger">{{ error }}</p>
-                          {% endfor %}
-                        </div>
-                      </div>
-                    {% endfor %}
-  
+
+                    {% crispy form %}
+
                     <p class="small mb-5 pb-lg-2">
                       <a class="text-white-50" href="#!">Forgot password?</a>
                     </p>
-  
+
                     <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 
                     <div class="d-flex justify-content-center mt-4 pt-1">
@@ -61,7 +49,26 @@
       </section>
     </form>
   </div>
-  
+
+  <!-- Modal HTML -->
+  <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="successModalLabel">Login Successful</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          You have successfully logged in!
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'home_page' %}" class="btn btn-primary">Go to Home</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 <!-- Add media queries for additional responsiveness -->
@@ -90,3 +97,17 @@
     }
   }
 </style>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Check for success messages and show modal if present
+    const messages = document.querySelector('.messages');
+    if (messages && messages.querySelector('.alert-success')) {
+      const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+      successModal.show();
+    }
+  });
+</script>
