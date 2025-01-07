@@ -1,0 +1,43 @@
+{% extends 'base_generic.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Search Form -->
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h2 class="text-center mb-4">Search Result by Roll Number</h2>
+            <form method="get" class="d-flex justify-content-center">
+                <input 
+                    type="text" 
+                    name="roll_number" 
+                    class="form-control me-2" 
+                    placeholder="Enter Roll Number" 
+                    style="max-width: 300px;"
+                    required>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Result Section -->
+    {% if result %}
+        <div class="mt-5 text-center">
+            <div class="card shadow-lg p-3" 
+                style="background-color: {% if result.is_passed %}#e7f9e7{% else %}#fbecec{% endif %}; border-color: {% if result.is_passed %}#28a745{% else %}#dc3545{% endif %};">
+                <div class="card-body">
+                    <h4>Roll Number: {{ result.roll_number }}</h4>
+                    {% if result.is_passed %}
+                        <p class="text-success fw-bold">GPA: {{ result.gpa }}</p>
+                    {% else %}
+                        <p class="text-danger fw-bold">Failed Subjects: {{ result.failed_subjects }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="mt-5 text-center">
+            <p class="text-danger">No result found. Please try again with a valid Roll Number.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
